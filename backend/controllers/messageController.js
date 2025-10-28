@@ -1,6 +1,6 @@
 // Text based AI chatmessage controller
 
-import imagekit from "../configs/imagekit.js";
+import imagekit from "../configs/imageKit.js";
 import openai from "../configs/openai.js";
 import Chat from "../modals/Chat.js";
 import User from "../modals/User.js";
