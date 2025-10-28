@@ -1,6 +1,6 @@
 import Stripe from "stripe";
-import Transaction from "../modals/Transaction";
-import User from "../modals/user";
+import Transaction from "../modals/Transaction.js";
+import User from "../modals/user.js";
 
 export const stripeWebhooks = async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_WEBHOOK_KEY);
