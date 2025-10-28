@@ -3,7 +3,7 @@
 import imagekit from "../configs/imagekit.js";
 import openai from "../configs/openai.js";
 import Chat from "../modals/Chat.js";
-import User from "../modals/user.js";
+import User from "../modals/User.js";
 import axios from "axios";
 
 export const textMessageController = async (req, res) => {

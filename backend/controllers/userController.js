@@ -1,4 +1,4 @@
-import User from "../modals/user.js";
+import User from "../modals/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Chat from "../modals/Chat.js";
