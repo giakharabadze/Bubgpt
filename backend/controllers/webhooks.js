@@ -3,9 +3,11 @@ import Transaction from "../modals/Transaction.js";
 import User from "../modals/User.js";
 
 export const stripeWebhooks = async (req, res) => {
-  const stripe = new Stripe(process.env.STRIPE_WEBHOOK_KEY);
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers["stripe-signature"];
   let event;
+  console.log("webhook gaeshva");
+
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
@@ -15,7 +17,7 @@ export const stripeWebhooks = async (req, res) => {
   } catch (error) {
     return res.status(400).send(`Webhook Error: ${error.message}`);
   }
-
+  console.log(event.type);
   try {
     switch (event.type) {
       case "payment_intent.succeeded":
