@@ -6,7 +6,6 @@ export const stripeWebhooks = async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers["stripe-signature"];
   let event;
-  console.log("webhook gaeshva");
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -14,19 +13,24 @@ export const stripeWebhooks = async (req, res) => {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
+    console.log("[Webhook] Event constructed:", event.type);
   } catch (error) {
+    console.error("[Webhook] Signature verification failed:", error.message);
     return res.status(400).send(`Webhook Error: ${error.message}`);
   }
-  console.log(event.type);
+
   try {
     switch (event.type) {
       case "payment_intent.succeeded":
         const paymentIntent = event.data.object;
-        const sessionList = stripe.checkout.sessions.list({
+        console.log("[Webhook] PaymentIntent succeeded:", paymentIntent.id);
+        const sessionList = await stripe.checkout.sessions.list({
           payment_intent: paymentIntent.id,
         });
+        console.log("[Webhook] Sessions fetched:", sessionList.data.length);
         const session = sessionList.data[0];
         const { transactionId, appId } = session.metadata;
+        console.log("[Webhook] Session metadata:", session.metadata);
         if (appId === "BubGPT") {
           const transaction = await Transaction.findOne({
             _id: transactionId,
