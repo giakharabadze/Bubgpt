@@ -2,9 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import { useAppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 import Message from "./Message";
+import toast from "react-hot-toast";
 
 export default function Chatbox() {
-  const { selectedChat, theme } = useAppContext();
+  const { selectedChat, theme, user, axios, token, setUser } = useAppContext();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +16,50 @@ export default function Chatbox() {
   const containerRef = useRef(null);
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
+      if (!user) return toast.error("Please login to chat");
+      setLoading(true);
+      const promptCopy = prompt;
+      setPrompt("");
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "user",
+          content: promptCopy,
+          timestamp: Date.now(),
+          isImage: false,
+        },
+      ]);
+      const { data } = await axios.post(
+        `/api/message/${mode}`,
+        {
+          chatId: selectedChat._id,
+          prompt: promptCopy,
+          isPublished: isPublished,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      if (data.success) {
+        setMessages((prev) => [...prev, data.reply]);
+        if (mode === "image") {
+          setUser((prev) => ({ ...prev, credits: prev.credits - 2 }));
+        } else {
+          setUser((prev) => ({ ...prev, credits: prev.credits - 1 }));
+        }
+      } else {
+        toast.error(data.message);
+        setPrompt(promptCopy);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -33,7 +77,7 @@ export default function Chatbox() {
     }
   }, [selectedChat]);
   return (
-    <div className="flex-1 flex flex-col justify-between m-5 md:m-10 xl:m-30 max-md:mt-14 2xl:pr-40">
+    <div className="flex-1 flex flex-col justify-between m-5 md:m-10 xl:m-15 max-md:mt-14 2xl:pr-40">
       {/* Chat messages */}
       <div ref={containerRef} className="flex-1 mb-5 overflow-y-scroll">
         {messages.length === 0 && (
@@ -74,13 +118,13 @@ export default function Chatbox() {
         </label>
       )}
       <form
-        onClick={onSubmit}
+        onSubmit={onSubmit}
         className="bg-primary/20 dark:bg-[#583c79]/30 border border-primary dark:border-[#80609F]/30 rounded-full w-full max-w-2xl p-3 pl-4 mx-auto flex gap-4 items-center"
       >
         <select
           onChange={(e) => setMode(e.target.value)}
           value={mode}
-          className="text-sm pl-3 pr-2 outline-none"
+          className="text-sm pl-3 pr-2 outline-none cursor-pointer"
         >
           <option className="dark:bg-purple-900" value="text">
             Text
