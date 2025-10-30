@@ -30,7 +30,7 @@ export default function App() {
         />
       )}
       {user ? (
-        <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white w-full h-[100lvh] overflow-hidden">
+        <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white w-full h-[100dvh]">
           <div className="flex w-full h-full">
             <SideBar setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
             <Routes>
