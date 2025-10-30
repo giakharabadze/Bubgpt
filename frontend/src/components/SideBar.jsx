@@ -57,9 +57,9 @@ export default function SideBar({ setIsMenuOpen, isMenuOpen }) {
   return (
     <div
       className={`flex flex-col h-[100dvh] min-w-72 p-5 
-  dark:bg-gradient-to-b from-[#1a181b]/80 to-[#000000]/90
+  dark:bg-gradient-to-b from-[#242124]/30 to-[#000000]/30
   dark:text-white border-r border-[#242124]/40 
-  backdrop-blur-3xl transition-all duration-500 
+  backdrop-blur-[150px] transition-all duration-500 
   max-md:absolute left-0 z-10
   ${!isMenuOpen && "max-md:-translate-x-full"}`}
     >
