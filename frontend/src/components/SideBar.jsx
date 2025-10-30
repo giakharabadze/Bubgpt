@@ -56,9 +56,12 @@ export default function SideBar({ setIsMenuOpen, isMenuOpen }) {
 
   return (
     <div
-      className={`flex flex-col h-screen min-w-72 p-5 dark:bg-gradient-to-b from-[#242124]/30 to-[#000000]/30 dark:text-white border-r border-[#242124]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute left-0 z-1 ${
-        !isMenuOpen && "max-md:-translate-x-full"
-      }`}
+      className={`flex flex-col h-[100dvh] min-w-72 p-5 
+  dark:bg-gradient-to-b from-[#1a181b]/80 to-[#000000]/90
+  dark:text-white border-r border-[#242124]/40 
+  backdrop-blur-3xl transition-all duration-500 
+  max-md:absolute left-0 z-10
+  ${!isMenuOpen && "max-md:-translate-x-full"}`}
     >
       <img
         src={theme === "dark" ? assets.logo_full : assets.logo_full_dark}
@@ -109,7 +112,7 @@ export default function SideBar({ setIsMenuOpen, isMenuOpen }) {
               <div>
                 <p className="truncate w-full">
                   {chat.messages.length > 0
-                    ? chat.messages[0]?.content.slice(0, 32)
+                    ? chat.messages[0]?.content.slice(0, 24)
                     : chat.name}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-[#B1AC0]">
