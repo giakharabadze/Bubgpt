@@ -189,7 +189,7 @@ export default function SideBar({ setIsMenuOpen, isMenuOpen }) {
           <img
             onClick={logout}
             src={assets.logout_icon}
-            className="h-5 cursor-pointer hidden not-dark:invert group-hover:block"
+            className="h-5 cursor-pointer not-dark:invert"
           />
         )}
       </div>
