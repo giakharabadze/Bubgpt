@@ -119,7 +119,7 @@ export default function Chatbox() {
       )}
       <form
         onSubmit={onSubmit}
-        className="bg-primary/20 dark:bg-[#583c79]/30 border border-primary dark:border-[#80609F]/30 rounded-full w-full max-w-2xl p-3 pl-4 mx-auto flex gap-4 items-center"
+        className="bg-primary/20 dark:bg-[#583c79]/30 border border-primary dark:border-[#80609F]/30 rounded-full w-full p-3 pl-4 flex gap-4 items-center"
       >
         <select
           onChange={(e) => setMode(e.target.value)}
@@ -141,6 +141,18 @@ export default function Chatbox() {
           className="flex-1 w-full text-sm outline-none"
           required
         />
+        {/* <textarea
+          onChange={(e) => {
+            setPrompt(e.target.value);
+            e.target.style.height = "auto";
+            e.target.style.height = `${e.target.scrollHeight}px`;
+          }}
+          value={prompt}
+          placeholder="Write your prompt here..."
+          rows={1}
+          className="flex-1 w-full text-sm outline-none bg-transparent resize-none overflow-hidden leading-5 max-h-[200px]"
+          required
+        /> */}
         <button disabled={loading}>
           <img
             src={loading ? assets.stop_icon : assets.send_icon}
